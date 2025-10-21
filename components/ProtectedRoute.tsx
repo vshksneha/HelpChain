@@ -4,14 +4,14 @@ import type React from "react"
 
 import { useAuth } from "@/contexts/AuthContext"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 
 interface ProtectedRouteProps {
   children: React.ReactNode
   allowedRoles?: ("donor" | "ngo" | "volunteer")[]
 }
 
-export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+function ProtectedRouteContent({ children, allowedRoles }: ProtectedRouteProps) {
   const { user, loading } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -64,4 +64,18 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   }
 
   return <>{children}</>
+}
+
+export default function ProtectedRoute(props: ProtectedRouteProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-600"></div>
+        </div>
+      }
+    >
+      <ProtectedRouteContent {...props} />
+    </Suspense>
+  )
 }
