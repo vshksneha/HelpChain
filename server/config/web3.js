@@ -1,0 +1,22 @@
+// server/config/web3.js
+const HELPCHAIN_CONTRACT_ADDRESS = process.env.HELPCHAIN_CONTRACT_ADDRESS; 
+
+// ABI for HelpChain.sol (Truncated for brevity, but includes all necessary fragments)
+const HELPCHAIN_ABI = [ 
+    { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "uint256", "name": "campaignId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "volunteer", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" } ], "name": "AidDeliveryVerified", "type": "event" },
+    { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "uint256", "name": "campaignId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "ngo", "type": "address" }, { "indexed": false, "internalType": "string", "name": "title", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "targetAmount", "type": "uint256" } ], "name": "CampaignCreated", "type": "event" },
+    { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "uint256", "name": "campaignId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }, { "indexed": true, "internalType": "bytes32", "name": "txnHashPlaceholder", "type": "bytes32" } ], "name": "DonationReceived", "type": "event" },
+    { "inputs": [ { "internalType": "uint256", "name": "_campaignId", "type": "uint256" }, { "internalType": "address", "name": "_volunteer", "type": "address" } ], "name": "assignVolunteer", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    { "inputs": [ { "internalType": "uint256", "name": "_campaignId", "type": "uint256" } ], "name": "donateToCampaign", "outputs": [], "stateMutability": "payable", "type": "function" },
+    { "inputs": [ { "internalType": "string", "name": "_title", "type": "string" }, { "internalType": "uint256", "name": "_targetAmount", "type": "uint256" } ], "name": "createCampaign", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "nonpayable", "type": "function" },
+    { "inputs": [ { "internalType": "uint256", "name": "_campaignId", "type": "uint256" } ], "name": "getCampaignDetails", "outputs": [ { "internalType": "address", "name": "ngo", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "target", "type": "uint256" }, { "internalType": "uint256", "name": "raised", "type": "uint256" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "address", "name": "volunteer", "type": "address" } ], "stateMutability": "view", "type": "function" },
+    { "inputs": [ { "internalType": "uint256", "name": "_campaignId", "type": "uint256" } ], "name": "verifyDelivery", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    { "inputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "name": "campaigns", "outputs": [ { "internalType": "address payable", "name": "ngo", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "targetAmount", "type": "uint256" }, { "internalType": "uint256", "name": "raisedAmount", "type": "uint256" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "address", "name": "assignedVolunteer", "type": "address" }, { "internalType": "bool", "name": "exists", "type": "bool" } ], "stateMutability": "view", "type": "function" },
+    { "inputs": [ { "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "uint256", "name": "", "type": "uint256" } ], "name": "campaignDonations", "outputs": [ { "internalType": "address", "name": "donor", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
+    { "inputs": [], "name": "nextCampaignId", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }
+]; 
+
+module.exports = {
+    HELPCHAIN_CONTRACT_ADDRESS,
+    HELPCHAIN_ABI
+};
